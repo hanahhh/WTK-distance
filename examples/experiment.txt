@@ -1,0 +1,204 @@
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 20 - k neighbors: 3 - execution time: 21.834428310394287
+Data set: BME - Accuracy: 0.7 - Subsequence length: 21 - k neighbors: 3 - execution time: 24.110289096832275
+Data set: BME - Accuracy: 0.7 - Subsequence length: 22 - k neighbors: 3 - execution time: 26.008380651474
+Data set: BME - Accuracy: 0.7133333333333334 - Subsequence length: 23 - k neighbors: 3 - execution time: 23.424991607666016
+Data set: BME - Accuracy: 0.7133333333333334 - Subsequence length: 24 - k neighbors: 3 - execution time: 27.919892072677612
+Data set: BME - Accuracy: 0.72 - Subsequence length: 25 - k neighbors: 3 - execution time: 27.584412336349487
+Data set: BME - Accuracy: 0.7266666666666667 - Subsequence length: 26 - k neighbors: 3 - execution time: 34.84913945198059
+Data set: BME - Accuracy: 0.7266666666666667 - Subsequence length: 27 - k neighbors: 3 - execution time: 28.793808937072754
+Data set: BME - Accuracy: 0.7266666666666667 - Subsequence length: 28 - k neighbors: 3 - execution time: 29.354032516479492
+Data set: BME - Accuracy: 0.7133333333333334 - Subsequence length: 29 - k neighbors: 3 - execution time: 27.26108169555664
+Data set: BME - Accuracy: 0.7133333333333334 - Subsequence length: 30 - k neighbors: 3 - execution time: 27.292211771011353
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 31 - k neighbors: 3 - execution time: 31.586164712905884
+Data set: BME - Accuracy: 0.72 - Subsequence length: 32 - k neighbors: 3 - execution time: 24.555705070495605
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 33 - k neighbors: 3 - execution time: 21.253007173538208
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 34 - k neighbors: 3 - execution time: 22.411800622940063
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 35 - k neighbors: 3 - execution time: 20.856372833251953
+Data set: BME - Accuracy: 0.6866666666666666 - Subsequence length: 36 - k neighbors: 3 - execution time: 20.41013526916504
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 37 - k neighbors: 3 - execution time: 21.02404761314392
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 38 - k neighbors: 3 - execution time: 19.55016589164734
+Data set: BME - Accuracy: 0.7 - Subsequence length: 39 - k neighbors: 3 - execution time: 19.139057874679565
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 40 - k neighbors: 3 - execution time: 21.065190315246582
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 41 - k neighbors: 3 - execution time: 18.90620994567871
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 42 - k neighbors: 3 - execution time: 18.449140071868896
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 43 - k neighbors: 3 - execution time: 18.041725873947144
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 44 - k neighbors: 3 - execution time: 21.37571692466736
+Data set: BME - Accuracy: 0.7 - Subsequence length: 45 - k neighbors: 3 - execution time: 26.767500162124634
+Data set: BME - Accuracy: 0.7 - Subsequence length: 46 - k neighbors: 3 - execution time: 25.05729055404663
+Data set: BME - Accuracy: 0.6933333333333334 - Subsequence length: 47 - k neighbors: 3 - execution time: 25.875938177108765
+Data set: BME - Accuracy: 0.6933333333333334 - Subsequence length: 48 - k neighbors: 3 - execution time: 26.144860982894897
+Data set: BME - Accuracy: 0.6933333333333334 - Subsequence length: 49 - k neighbors: 3 - execution time: 25.3258798122406
+---------------------------------------------------------------------------------------------------
+
+Data set: BME - Accuracy: 0.6466666666666666 - Subsequence length: 12 - k neighbors: 3 - execution time: 25.92722177505493
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 38 - k neighbors: 3 - execution time: 19.698384523391724
+Data set: BME - Accuracy: 0.6266666666666667 - Subsequence length: 64 - k neighbors: 3 - execution time: 12.057523727416992
+---------------------------------------------------------------------------------------------------
+Data set: BeetleFly - Accuracy: 0.7 - Subsequence length: 51 - k neighbors: 3 - execution time: 32.38952159881592
+Data set: BeetleFly - Accuracy: 0.7 - Subsequence length: 153 - k neighbors: 3 - execution time: 24.235968589782715
+Data set: BeetleFly - Accuracy: 0.75 - Subsequence length: 256 - k neighbors: 3 - execution time: 11.63336181640625
+---------------------------------------------------------------------------------------------------
+Data set: BirdChicken - Accuracy: 0.95 - Subsequence length: 51 - k neighbors: 3 - execution time: 40.25902032852173
+Data set: BirdChicken - Accuracy: 0.85 - Subsequence length: 153 - k neighbors: 3 - execution time: 26.682069301605225
+Data set: BirdChicken - Accuracy: 0.75 - Subsequence length: 256 - k neighbors: 3 - execution time: 14.133747339248657
+---------------------------------------------------------------------------------------------------
+Data set: Chinatown - Accuracy: 0.9008746355685131 - Subsequence length: 2 - k neighbors: 3 - execution time: 5.7089149951934814
+Data set: Chinatown - Accuracy: 0.9358600583090378 - Subsequence length: 7 - k neighbors: 3 - execution time: 5.550563335418701
+Data set: Chinatown - Accuracy: 0.9271137026239067 - Subsequence length: 12 - k neighbors: 3 - execution time: 3.6966552734375
+---------------------------------------------------------------------------------------------------
+Data set: Coffee - Accuracy: 1.0 - Subsequence length: 28 - k neighbors: 3 - execution time: 15.787514686584473
+Data set: Coffee - Accuracy: 1.0 - Subsequence length: 85 - k neighbors: 3 - execution time: 9.093080997467041
+Data set: Coffee - Accuracy: 1.0 - Subsequence length: 143 - k neighbors: 3 - execution time: 4.880042791366577
+---------------------------------------------------------------------------------------------------
+Data set: DistalPhalanxOutlineCorrect - Accuracy: 0.7536231884057971 - Subsequence length: 8 - k neighbors: 3 - execution time: 313.14696860313416
+Data set: DistalPhalanxOutlineCorrect - Accuracy: 0.717391304347826 - Subsequence length: 24 - k neighbors: 3 - execution time: 212.2998309135437
+Data set: DistalPhalanxOutlineCorrect - Accuracy: 0.7246376811594203 - Subsequence length: 40 - k neighbors: 3 - execution time: 206.43527960777283
+---------------------------------------------------------------------------------------------------
+Data set: ECG200 - Accuracy: 0.91 - Subsequence length: 9 - k neighbors: 3 - execution time: 49.42485976219177
+Data set: ECG200 - Accuracy: 0.89 - Subsequence length: 28 - k neighbors: 3 - execution time: 44.94133377075195
+Data set: ECG200 - Accuracy: 0.89 - Subsequence length: 48 - k neighbors: 3 - execution time: 19.435891151428223
+---------------------------------------------------------------------------------------------------
+Data set: FaceFour - Accuracy: 0.8409090909090909 - Subsequence length: 35 - k neighbors: 3 - execution time: 82.07111096382141
+Data set: FaceFour - Accuracy: 0.8409090909090909 - Subsequence length: 105 - k neighbors: 3 - execution time: 36.370455503463745
+Data set: FaceFour - Accuracy: 0.8409090909090909 - Subsequence length: 175 - k neighbors: 3 - execution time: 18.175084829330444
+---------------------------------------------------------------------------------------------------
+Data set: Fungi - Accuracy: 0.34946236559139787 - Subsequence length: 20 - k neighbors: 3 - execution time: 32.00971436500549
+Data set: Fungi - Accuracy: 0.2849462365591398 - Subsequence length: 60 - k neighbors: 3 - execution time: 20.10429883003235
+Data set: Fungi - Accuracy: 0.34408602150537637 - Subsequence length: 100 - k neighbors: 3 - execution time: 12.656684637069702
+---------------------------------------------------------------------------------------------------
+Data set: GunPoint - Accuracy: 0.8866666666666667 - Subsequence length: 15 - k neighbors: 3 - execution time: 44.19212079048157
+Data set: GunPoint - Accuracy: 0.9533333333333334 - Subsequence length: 45 - k neighbors: 3 - execution time: 29.86041498184204
+Data set: GunPoint - Accuracy: 0.9066666666666666 - Subsequence length: 75 - k neighbors: 3 - execution time: 19.111454486846924
+---------------------------------------------------------------------------------------------------
+Data set: Herring - Accuracy: 0.609375 - Subsequence length: 51 - k neighbors: 3 - execution time: 316.5937485694885
+Data set: Herring - Accuracy: 0.640625 - Subsequence length: 153 - k neighbors: 3 - execution time: 211.77707362174988
+Data set: Herring - Accuracy: 0.6875 - Subsequence length: 256 - k neighbors: 3 - execution time: 112.43679451942444
+---------------------------------------------------------------------------------------------------
+Data set: ItalyPowerDemand - Accuracy: 0.8901846452866861 - Subsequence length: 2 - k neighbors: 3 - execution time: 35.21340584754944
+Data set: ItalyPowerDemand - Accuracy: 0.9514091350826045 - Subsequence length: 7 - k neighbors: 3 - execution time: 31.24290943145752
+Data set: ItalyPowerDemand - Accuracy: 0.9582118561710399 - Subsequence length: 12 - k neighbors: 3 - execution time: 25.98175811767578
+---------------------------------------------------------------------------------------------------
+Data set: MoteStrain - Accuracy: 0.8618210862619808 - Subsequence length: 8 - k neighbors: 3 - execution time: 42.14265012741089
+Data set: MoteStrain - Accuracy: 0.8674121405750799 - Subsequence length: 25 - k neighbors: 3 - execution time: 29.98978352546692
+Data set: MoteStrain - Accuracy: 0.8450479233226837 - Subsequence length: 42 - k neighbors: 3 - execution time: 16.809566497802734
+---------------------------------------------------------------------------------------------------
+Data set: OliveOil - Accuracy: 0.9 - Subsequence length: 57 - k neighbors: 3 - execution time: 42.46647930145264
+Data set: OliveOil - Accuracy: 0.9 - Subsequence length: 171 - k neighbors: 3 - execution time: 15.11082911491394
+Data set: OliveOil - Accuracy: 0.9 - Subsequence length: 285 - k neighbors: 3 - execution time: 7.260521173477173
+---------------------------------------------------------------------------------------------------
+Data set: Plane - Accuracy: 1.0 - Subsequence length: 14 - k neighbors: 3 - execution time: 31.666553020477295
+Data set: Plane - Accuracy: 0.9904761904761905 - Subsequence length: 43 - k neighbors: 3 - execution time: 25.390101194381714
+Data set: Plane - Accuracy: 0.9809523809523809 - Subsequence length: 72 - k neighbors: 3 - execution time: 16.377948760986328
+---------------------------------------------------------------------------------------------------
+Data set: SmoothSubspace - Accuracy: 0.92 - Subsequence length: 1 - k neighbors: 3 - execution time: 8.937172174453735
+Data set: SmoothSubspace - Accuracy: 0.98 - Subsequence length: 4 - k neighbors: 3 - execution time: 8.259392499923706
+Data set: SmoothSubspace - Accuracy: 0.8666666666666667 - Subsequence length: 7 - k neighbors: 3 - execution time: 8.659935235977173
+---------------------------------------------------------------------------------------------------
+Data set: SonyAIBORobotSurface1 - Accuracy: 0.7071547420965059 - Subsequence length: 7 - k neighbors: 3 - execution time: 10.915849924087524
+Data set: SonyAIBORobotSurface1 - Accuracy: 0.6006655574043261 - Subsequence length: 21 - k neighbors: 3 - execution time: 8.461471557617188
+Data set: SonyAIBORobotSurface1 - Accuracy: 0.5690515806988353 - Subsequence length: 35 - k neighbors: 3 - execution time: 5.885708808898926
+---------------------------------------------------------------------------------------------------
+Data set: SonyAIBORobotSurface2 - Accuracy: 0.9181532004197271 - Subsequence length: 6 - k neighbors: 3 - execution time: 23.522632122039795
+Data set: SonyAIBORobotSurface2 - Accuracy: 0.8499475341028332 - Subsequence length: 19 - k neighbors: 3 - execution time: 21.744019746780396
+Data set: SonyAIBORobotSurface2 - Accuracy: 0.8037775445960126 - Subsequence length: 32 - k neighbors: 3 - execution time: 15.609750509262085
+---------------------------------------------------------------------------------------------------
+Data set: ToeSegmentation2 - Accuracy: 0.8923076923076924 - Subsequence length: 34 - k neighbors: 3 - execution time: 116.91948890686035
+Data set: ToeSegmentation2 - Accuracy: 0.9230769230769231 - Subsequence length: 102 - k neighbors: 3 - execution time: 73.7116346359253
+Data set: ToeSegmentation2 - Accuracy: 0.9230769230769231 - Subsequence length: 171 - k neighbors: 3 - execution time: 36.697622537612915
+---------------------------------------------------------------------------------------------------
+Data set: DistalPhalanxTW - Accuracy: 0.7475 - Subsequence length: 8 - k neighbors: 3 - execution time: 79.7301504611969
+Data set: DistalPhalanxTW - Accuracy: 0.7475 - Subsequence length: 24 - k neighbors: 3 - execution time: 50.08367466926575
+Data set: DistalPhalanxTW - Accuracy: 0.7375 - Subsequence length: 40 - k neighbors: 3 - execution time: 38.96785044670105
+---------------------------------------------------------------------------------------------------
+Data set: BME - Accuracy: 0.6733333333333333 - Subsequence length: 12 - k neighbors: 1 - execution time: 23.34619688987732
+Data set: BME - Accuracy: 0.72 - Subsequence length: 38 - k neighbors: 1 - execution time: 30.788362979888916
+Data set: BME - Accuracy: 0.68 - Subsequence length: 64 - k neighbors: 1 - execution time: 18.44063425064087
+-------------------------------------------------k=1-------------------------------------------------
+Data set: BME - Accuracy: 0.6466666666666666 - Subsequence length: 12 - k neighbors: 3 - execution time: 39.60236692428589
+Data set: BME - Accuracy: 0.7066666666666667 - Subsequence length: 38 - k neighbors: 3 - execution time: 29.83666968345642
+Data set: BME - Accuracy: 0.6266666666666667 - Subsequence length: 64 - k neighbors: 3 - execution time: 17.49213743209839
+-------------------------------------------------k=3-------------------------------------------------
+Data set: BME - Accuracy: 0.64 - Subsequence length: 12 - k neighbors: 5 - execution time: 39.582961320877075
+Data set: BME - Accuracy: 0.64 - Subsequence length: 38 - k neighbors: 5 - execution time: 30.160770416259766
+Data set: BME - Accuracy: 0.6333333333333333 - Subsequence length: 64 - k neighbors: 5 - execution time: 18.485876083374023
+--------------------------------------------------------------------------------------------------
+BME(10) &0.67 &0.65 &0.64\\ 
+BME(30) &0.72 &0.71 &0.64\\ 
+BME(50) &0.68 &0.63 &0.63\\ 
+--------------------------------------------------------------------------------------------------
+BeetleFly(10) &0.75 &0.7 &0.8\\ 
+BeetleFly(30) &0.8 &0.7 &0.65\\ 
+BeetleFly(50) &0.8 &0.75 &0.8\\ 
+--------------------------------------------------------------------------------------------------
+BirdChicken(10) &0.85 &0.95 &0.75\\ 
+BirdChicken(30) &0.8 &0.85 &0.85\\ 
+BirdChicken(50) &0.85 &0.75 &0.8\\ 
+--------------------------------------------------------------------------------------------------
+Chinatown(10) &0.92 &0.9 &0.92\\ 
+Chinatown(30) &0.94 &0.94 &0.94\\ 
+Chinatown(50) &0.94 &0.93 &0.93\\ 
+--------------------------------------------------------------------------------------------------
+Coffee(10) &0.96 &1.0 &1.0\\ 
+Coffee(30) &1.0 &1.0 &0.96\\ 
+Coffee(50) &1.0 &1.0 &1.0\\ 
+--------------------------------------------------------------------------------------------------
+DistalPhalanxOutlineCorrect(10) &0.74 &0.75 &0.76\\ 
+DistalPhalanxOutlineCorrect(30) &0.72 &0.72 &0.72\\ 
+DistalPhalanxOutlineCorrect(50) &0.72 &0.72 &0.72\\ 
+--------------------------------------------------------------------------------------------------
+DistalPhalanxTW(10) &0.76 &0.75 &0.78\\ 
+DistalPhalanxTW(30) &0.72 &0.75 &0.77\\ 
+DistalPhalanxTW(50) &0.71 &0.74 &0.76\\ 
+--------------------------------------------------------------------------------------------------
+ECG200(10) &0.86 &0.91 &0.85\\ 
+ECG200(30) &0.9 &0.89 &0.88\\ 
+ECG200(50) &0.89 &0.89 &0.88\\ 
+--------------------------------------------------------------------------------------------------
+FaceFour(10) &0.9 &0.84 &0.81\\ 
+FaceFour(30) &0.93 &0.84 &0.85\\ 
+FaceFour(50) &0.91 &0.84 &0.81\\ 
+--------------------------------------------------------------------------------------------------
+Fungi(10) &0.96 &0.35 &0.19\\ 
+Fungi(30) &0.98 &0.28 &0.17\\ 
+Fungi(50) &0.99 &0.34 &0.12\\ 
+--------------------------------------------------------------------------------------------------
+GunPoint(10) &0.97 &0.89 &0.84\\ 
+GunPoint(30) &0.98 &0.95 &0.89\\ 
+GunPoint(50) &0.91 &0.91 &0.87\\ 
+--------------------------------------------------------------------------------------------------
+Herring(10) &0.61 &0.61 &0.55\\ 
+Herring(30) &0.59 &0.64 &0.56\\ 
+Herring(50) &0.62 &0.69 &0.56\\ 
+--------------------------------------------------------------------------------------------------
+ItalyPowerDemand(10) &0.89 &0.89 &0.87\\ 
+ItalyPowerDemand(30) &0.95 &0.95 &0.95\\ 
+ItalyPowerDemand(50) &0.95 &0.96 &0.95\\ 
+--------------------------------------------------------------------------------------------------
+MoteStrain(10) &0.86 &0.86 &0.88\\ 
+MoteStrain(30) &0.86 &0.87 &0.87\\ 
+MoteStrain(50) &0.84 &0.85 &0.84\\ 
+--------------------------------------------------------------------------------------------------
+OliveOil(10) &0.87 &0.9 &0.83\\ 
+OliveOil(30) &0.87 &0.9 &0.87\\ 
+OliveOil(50) &0.87 &0.9 &0.87\\ 
+--------------------------------------------------------------------------------------------------
+Plane(10) &1.0 &1.0 &1.0\\ 
+Plane(30) &0.99 &0.99 &0.98\\ 
+Plane(50) &0.96 &0.98 &0.98\\ 
+--------------------------------------------------------------------------------------------------
+SmoothSubspace(10) &0.9 &0.92 &0.92\\ 
+SmoothSubspace(30) &0.95 &0.98 &0.98\\ 
+SmoothSubspace(50) &0.87 &0.87 &0.89\\ 
+--------------------------------------------------------------------------------------------------
+SonyAIBORobotSurface1(10) &0.79 &0.71 &0.6\\ 
+SonyAIBORobotSurface1(30) &0.7 &0.6 &0.5\\ 
+SonyAIBORobotSurface1(50) &0.69 &0.57 &0.45\\ 
+--------------------------------------------------------------------------------------------------
+SonyAIBORobotSurface2(10) &0.92 &0.92 &0.92\\ 
+SonyAIBORobotSurface2(30) &0.88 &0.85 &0.84\\ 
+SonyAIBORobotSurface2(50) &0.85 &0.8 &0.79\\ 
+--------------------------------------------------------------------------------------------------
+ToeSegmentation2(10) &0.92 &0.89 &0.88\\ 
+ToeSegmentation2(30) &0.93 &0.92 &0.91\\ 
+ToeSegmentation2(50) &0.93 &0.92 &0.92\\ 
+--------------------------------------------------------------------------------------------------
