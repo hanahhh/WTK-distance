@@ -3,6 +3,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from tqdm import tqdm
 from wtk import wtk_distance
+from otw import otw_distance, otw_distance_1
 import time
 
 def knn_classifier_from_distance_matrix(distance_matrix, k, labels):
@@ -31,6 +32,21 @@ def knn_WTK(X_train, X_test, y_train, y_test, data_set, sub_length,k=3):
     )
     accuracy = accuracy_score(y_test, y_pred)
     end_time = time.time()
-    # with open('experiment.txt', 'a') as file:
-    #     file.write(f"Data set: {data_set} - Accuracy: {accuracy} - Subsequence length: {sub_length} - k neighbors: {k} - execution time: {end_time - start_time}\n")
+    return accuracy
+
+def knn_OTW(X_train, X_test, y_train, y_test, m, s, k=1):
+    train_size = len(X_train)
+    test_size = len(X_test)
+    result = np.zeros((test_size, train_size))
+    for train_idx in tqdm(range(train_size)):
+        for test_idx in tqdm(range(test_size), leave=False):
+            distance = otw_distance(X_train[train_idx], X_test[test_idx], m, s)
+            result[test_idx, train_idx] = distance
+    
+    y_pred = knn_classifier_from_distance_matrix(
+        distance_matrix=result,
+        k=k,
+        labels=y_train,
+    )
+    accuracy = accuracy_score(y_test, y_pred)
     return accuracy

@@ -1,0 +1,32 @@
+import math
+def cumulative_sum(a, n, i, s):
+    k = math.floor(n*s)
+    if i>=k:
+        return a[i] - a[i-k]
+    else:
+        return a[i]
+        
+def cumulative_result(a, b, m, s):
+    n = len(a)
+    a_m = [0] * n
+    b_m = [0] * n
+    cumulative_sum_a = 0
+    cumulative_sum_b = 0
+    sum_2 = 0
+    for i in range(n):
+        cumulative_sum_a += a[i]
+        cumulative_sum_b += b[i]
+        a_m[i] = cumulative_sum_a
+        b_m[i] = cumulative_sum_b
+        print(f"a[{i}] = {a_m[i]}, b[{i}] = {b_m[i]}\n")
+        if i < n-1:
+            print(f"culmulative a: {cumulative_sum(a_m, n, i, s)}, culmulative b: {cumulative_sum(b_m, n, i, s)}\n")
+            sum_2 += abs(cumulative_sum(a_m, n, i, s) - cumulative_sum(b_m, n, i, s))
+        print(f"sum = {sum_2}\n")
+    return sum_2 +  m * abs(cumulative_sum(a_m, n, n-1, s) - cumulative_sum(b_m, n, n-1, s))
+        
+# Example usage:
+a = [1, 2, 3, 4, 5]
+b = [5, 6, 7, 8, 9]
+result = cumulative_result(a, b, 3, 1/2)
+print(result)  # In list m tương ứng
