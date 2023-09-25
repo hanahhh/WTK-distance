@@ -1,4 +1,4 @@
-from wtk.utilities import get_ucr_dataset
+from ot_dis.wtk.utilities import get_ucr_dataset
 from aeon.datasets import load_from_arff_file
 import numpy as np
 

@@ -1,0 +1,7 @@
+cython
+numpy
+POT
+scikit-learn
+aeon
+tqdm
+setuptools

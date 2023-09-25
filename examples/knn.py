@@ -2,8 +2,10 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from tqdm import tqdm
-from wtk import wtk_distance
-from otw import otw_distance, otw_distance_1
+from ot_dis.wtk import wtk_distance
+from ot_dis.otw import otw_distance
+# from wtk import wtk_distance
+# from otw import otw_distance, otw_distance_1
 import time
 
 def knn_classifier_from_distance_matrix(distance_matrix, k, labels):

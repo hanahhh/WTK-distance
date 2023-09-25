@@ -12,10 +12,14 @@ WTK relies on the following dependencies:
 
 ## Installation
 
-The easiest way is to install WTK from the Python Package Index (PyPI) via
+The easiest way is to install WTK and OTW through requirements.txt via
 
 ```
-$ pip install cython numpy wtk
+$ pip install -r .\requirements.txt
+```
+Run setup.py file with development mode
+```
+$ python setup.py develop
 ```
 
 ## Usage
