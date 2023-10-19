@@ -111,8 +111,7 @@ class KeyPointGuidedOT(object):
         pi = kpg_gw.gromov_wasserstein(Cs, Ct, p, q, Mask=M, OT_algorithm=algorithm, fused=True, Cxy=G, alpha=alpha)
         return pi
 
-    def partial_kpg_rl(self, p, q, xs, xt, K, s=0.5, cost_function="L2", tau_s=1.0,
-                  tau_t=1.0, normalized=False,eps=1e-10):
+    def partial_kpg_rl(self, p, q, xs, xt, K, s=0.5, cost_function="L2", eps=1e-10):
         '''
         :param p: ndarray, (m,), Mass of source samples
         :param q: ndarray, (n,), Mass of target samples
@@ -133,26 +132,18 @@ class KeyPointGuidedOT(object):
         :param thres: float, stop criterion for sinkhorn
         :return: transport plan, (m,n)
         '''
-        I = [tup[0] for tup in K]
-        J = [tup[1] for tup in K]
-
-        ## guiding matrix
-        Cs = self.cost_matrix(xs, xs, cost_function, eps)
-        Ct = self.cost_matrix(xt, xt, cost_function, eps)
-        if normalized:
-            Cs /= (Cs.max() + eps)
-            Ct /= (Ct.max() + eps)
-        G = utils.guiding_matrix(Cs, Ct, I, J, tau_s, tau_t)
+        ## cost matrix
+        C = self.cost_matrix(xs,xt,cost_function,eps)
+        C /= (C.max() + eps)
 
         ## mask matrix
-        M = np.ones_like(G)
-        M[I, :] = 0
-        M[:, J] = 0
-        M[I, J] = 1
-
+        M = self.create_mask(C, K)
+        
         ## transport plan
-        pi = partial_OT.partial_ot(torch.Tensor(p), torch.Tensor(q), torch.Tensor(G), I, J, s=s)
-        return pi[:-1,:-1]
+        pi = partial_OT.partial_ot(torch.Tensor(p), torch.Tensor(q), torch.Tensor(C), s=s, M=M)
+        D = C.numpy()
+        cost = np.sum(pi * D)
+        return pi[:-1,:-1], cost
 
 
 if __name__ == "__main__":
