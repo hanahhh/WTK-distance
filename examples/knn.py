@@ -44,6 +44,23 @@ def knn_OTW(X_train, X_test, y_train, y_test, m, s, k=1):
         for test_idx in tqdm(range(test_size), leave=False):
             distance = otw_distance(X_train[train_idx], X_test[test_idx], m, s)
             result[test_idx, train_idx] = distance
+    print(f"_______________{result.shape}_______________")
+    y_pred = knn_classifier_from_distance_matrix(
+        distance_matrix=result,
+        k=k,
+        labels=y_train,
+    )
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy
+
+def knn_KPG(X_train, X_test, y_train, y_test, l=1, k=1):
+    train_size = len(X_train)
+    test_size = len(X_test)
+    result = np.zeros((test_size, train_size))
+    for train_idx in tqdm(range(train_size)):
+        for test_idx in tqdm(range(test_size), leave=False):
+            distance = otw_distance(X_train[train_idx], X_test[test_idx], m, s)
+            result[test_idx, train_idx] = distance
     
     y_pred = knn_classifier_from_distance_matrix(
         distance_matrix=result,

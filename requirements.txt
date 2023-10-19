@@ -5,3 +5,8 @@ scikit-learn
 aeon
 tqdm
 setuptools
+torch
+ot
+matplotlib
+cvxpy
+seaborn
