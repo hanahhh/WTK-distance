@@ -5,7 +5,6 @@ from tqdm import tqdm
 from ot_dis.wtk import wtk_distance
 from ot_dis.otw import otw_distance
 from ot_dis.kpg import kpg_sequence_distance
-from ot_dis.kpg.kpg_fix import KeyPointGuidedOT
 # from wtk import wtk_distance
 # from otw import otw_distance, otw_distance_1
 import time
@@ -55,14 +54,13 @@ def knn_OTW(X_train, X_test, y_train, y_test, m, s, k=1):
     accuracy = accuracy_score(y_test, y_pred)
     return accuracy
 
-def knn_sequence_KPG(X_train, X_test, y_train, y_test, l=3, sub_length=25, k=1):
+def knn_sequence_KPG(X_train, X_test, y_train, y_test, lamb=3, sub_length=25, k=1):
     train_size = len(X_train)
     test_size = len(X_test)
     result = np.zeros((test_size, train_size))
-    kgot = KeyPointGuidedOT()
     for train_idx in tqdm(range(train_size)):
         for test_idx in tqdm(range(test_size), leave=False):
-            distance = kpg_sequence_distance(X_train[train_idx], X_test[test_idx], l=l, sub_length=sub_length, kgot=kgot)
+            distance = kpg_sequence_distance(X_train[train_idx], X_test[test_idx], lamb=lamb, sub_length=sub_length)
             result[test_idx, train_idx] = distance
     
     y_pred = knn_classifier_from_distance_matrix(

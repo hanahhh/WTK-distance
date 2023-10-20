@@ -266,7 +266,10 @@ def wtk_distance(a, b, k=10, functor=wasserstein_kernel,  par_grid = [1], normal
     subs_a = subsequences(a, k)
     subs_b = subsequences(b, k)
     dis = functor(subs_a, subs_b)
-    return np.exp(-gamma * dis)
+
+    C = ot.dist(subs_a, subs_b, metric='euclidean')
+    pi = ot.emd([], [], C)
+    return np.exp(-gamma * dis), pi
 
 def wtk_distance_fix(a, b):
     subs_a = subsequences(a, 25)
