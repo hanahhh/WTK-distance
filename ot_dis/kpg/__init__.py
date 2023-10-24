@@ -30,7 +30,7 @@ def create_mask(C, k):
                 M[i][j]=1 
     return M
 
-def kpg_sequence_distance(a, b, lamb=3, sub_length=25, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", cost_function="L2", plot=False):
+def kpg_sequence_distance(a, b, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", cost_function="L2", plot=False):
     '''
     Parameters
     ----------
@@ -72,6 +72,7 @@ def kpg_sequence_distance(a, b, lamb=3, sub_length=25, eps=1e-10, reg=0.0001, ma
         raise ValueError("algorithm must be 'linear_programming' or 'sinkhorn'!")
     D = C.numpy()
     cost = np.sum(pi * D)
+    cost = np.exp(-gamma * cost)
     if plot:
         sns.heatmap(pi, linewidth=0.5)
         return pi, cost

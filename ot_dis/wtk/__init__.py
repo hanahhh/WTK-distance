@@ -7,6 +7,7 @@ from tqdm import tqdm
 import ot
 from .utilities import ensure_psd
 
+import seaborn as sns
 from sklearn.metrics import pairwise
 from sklearn.preprocessing import scale
 
@@ -262,14 +263,17 @@ def pairwise_subsequence_kernel(
 
     return K_train, K_test
 
-def wtk_distance(a, b, k=10, functor=wasserstein_kernel,  par_grid = [1], normalized = False, gamma=0.1):
+def wtk_distance(a, b, k=10, functor=wasserstein_kernel,  par_grid = [1], normalized = False, gamma=0.1, plot=False):
     subs_a = subsequences(a, k)
     subs_b = subsequences(b, k)
     dis = functor(subs_a, subs_b)
 
-    C = ot.dist(subs_a, subs_b, metric='euclidean')
-    pi = ot.emd([], [], C)
-    return np.exp(-gamma * dis), pi
+    if plot:
+        C = ot.dist(subs_a, subs_b, metric='euclidean')
+        pi = ot.emd([], [], C)
+        sns.heatmap(pi, linewidth=0.5)
+        return pi, np.exp(-gamma * dis)
+    return np.exp(-gamma * dis)
 
 def wtk_distance_fix(a, b):
     subs_a = subsequences(a, 25)
