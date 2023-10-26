@@ -1,47 +1,38 @@
 import numpy as np
 import seaborn as sns
 import torch
-from . import utils,linearprog,sinkhorn,kpg_gw,partial_OT
+from . import linearprog,sinkhorn,kpg_gw,partial_OT
+from .utils import cost_matrix, cost_matrix_1d, create_mask, subsequences
 from ot.lp import emd_1d_sorted
 
-def subsequences(time_series, k):
-    time_series = np.asarray(time_series)
-    n = time_series.size
-    shape = (n - k + 1, k)
-    strides = time_series.strides * 2
-
-    return np.lib.stride_tricks.as_strided(
-        time_series,
-        shape=shape,
-        strides=strides
-    )
-
-def cost_matrix(x, y):
-    x, y = torch.Tensor(x), torch.Tensor(y)
-    Cxy = x.pow(2).sum(dim=1).unsqueeze(1) + y.pow(2).sum(dim=1).unsqueeze(0) - 2 * torch.matmul(x, y.t())
-    #Cxy = np.expand_dims((x**2).sum(axis=1),1) + np.expand_dims((y**2).sum(axis=1),0) - 2 * x@y.T
-    return Cxy
-
-def cost_matrix_1d(x, y):
-    x, y = torch.Tensor(x), torch.Tensor(y)
-    Cxy = x.pow(2).sum(dim=1).unsqueeze(1) + y.pow(2).sum(dim=1).unsqueeze(0) - 2 * torch.matmul(x, y.t())
-    #Cxy = np.expand_dims((x**2).sum(axis=1),1) + np.expand_dims((y**2).sum(axis=1),0) - 2 * x@y.T
-    return Cxy
-
-def create_mask(C, k):
-    n, m = C.shape
-    M = np.zeros((n, m))
-    for i in range(n):
-        for j in range(m):
-            if (i > j*n/m - k) & (i < j*n/m + k):
-                M[i][j]=1 
-    return M
-
-def kpg_2d_rl_kp(xs, xt, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", cost_function="L2", plot=False):
+def masking_map(xs, xt, lamb=5, s=None, sub_length=None, gamma=None, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", plot=False):
+    '''
+    Parameters
+    ----------
+        xs: ndarray, (m,d)
+            d-dimensional source samples
+        xt: ndarray, (n,d) 
+            d-dimensional target samples
+        lamb: lambda, int 
+            Adjust the diagonal width. Default is 3
+        algorithm: str
+            algorithm to solve model. Default is "linear_programming". Choices should be
+            "linear_programming" and "sinkhorn"
+        plot: bool
+            status for plot the optimal transport matrix or not. Default is "False"
+    Returns
+    ------- 
+        cost: Transportation cost
+    '''
     p = np.ones(len(xs))/len(xs)
     q = np.ones(len(xt))/len(xt)
-
-    C = cost_matrix(xs, xt)
+    
+    if xs.ndim == 1: 
+        C = cost_matrix_1d(xs, xt)
+    elif xs.ndim == 2:
+        C = cost_matrix(xs, xt)
+    else:
+        raise ValueError("The data must in the form of 1d or 2d array")
     C /= (C.max() + eps)
 
     ## mask matrix
@@ -49,20 +40,85 @@ def kpg_2d_rl_kp(xs, xt, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg=0.0001
 
     ## solving model
     if algorithm == "linear_programming":
-        pi = linearprog.lp(p,q,C,M)
+        pi = linearprog.lp_partial(p,q,C,M)
     elif algorithm == "sinkhorn":
         pi = sinkhorn.sinkhorn_log_domain(p,q,C,M,reg,max_iterations,thres)
     else:
         raise ValueError("algorithm must be 'linear_programming' or 'sinkhorn'!")
-    D = C.numpy()
-    cost = np.sum(pi * D)
-    cost = np.exp(-gamma * cost)
+    
+    cost = np.sum(pi * C.numpy())
+    #cost = np.exp(-gamma * cost)
     if plot:
         sns.heatmap(pi, linewidth=0.5)
         return pi, cost
     return cost
 
-def kpg_sequence_distance(a, b, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", cost_function="L2", plot=False):
+def masking_map_partial(xs, xt, lamb=5, s=0.5, sub_length=None, gamma=None, xi=None, A=None, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", plot=False):
+    '''
+    Parameters
+    ----------
+        xs: ndarray, (m,d)
+            d-dimensional source samples
+        xt: ndarray, (n,d) 
+            d-dimensional target samples
+        s: int
+            The amount of mass wanted to transport through 2 empirical distribution
+        lamb: lambda, int 
+            Adjust the diagonal width. Default is 3
+        data: 1d, 2d
+            define the type of data
+        algorithm: str
+            algorithm to solve model. Default is "linear_programming". Choices should be
+            "linear_programming" and "sinkhorn"
+        plot: bool
+            status for plot the optimal transport matrix or not. Default is "False"
+    Returns
+    ------- 
+        cost: Transportation cost
+    '''
+    p = torch.Tensor(np.ones(len(xs))/len(xs))
+    q = torch.Tensor(np.ones(len(xt))/len(xt))
+    if xs.ndim == 1: 
+        C = cost_matrix_1d(xs, xt)
+    elif xs.ndim == 2:
+        C = cost_matrix(xs, xt)
+    else:
+        raise ValueError("The data must in the form of 1d or 2d array")
+    C /= (C.max() + eps)
+    M = torch.Tensor(create_mask(C, lamb))
+
+    #partial cost matrix
+    if A is None:
+        A = C.max()
+    if xi is None:
+        xi = 1e2*C.max()
+    C_ = torch.cat((C, xi * torch.ones(C.size(0), 1)), dim=1)
+    C_ = torch.cat((C_, xi * torch.ones(1, C_.size(1))), dim=0)
+    C_[-1, -1] = 2 * xi + A
+
+    # partial empirical distributions   
+    p_ = torch.cat((p, (torch.sum(q) - s) * torch.Tensor([1])))
+    q_ = torch.cat((q, (torch.sum(p) - s) * torch.Tensor([1])))
+
+    # partial transportation mask
+    a = torch.zeros(M.shape[0], 1, dtype=torch.int64)
+    b = torch.zeros(M.shape[1] + 1, 1, dtype=torch.int64)
+    M_ = torch.cat((M, a), dim=1)
+    M_ = torch.cat((M_, b.t()), dim=0)
+    pot = M_.shape[1]
+    n, m = M_.shape
+    for i in range(n-lamb*2, n):
+        if (i > pot*n/m - lamb) & (i < pot*n/m + lamb):
+            M_[i][pot-1]=1 
+    
+    pi_ = linearprog.lp_partial(p=p_.numpy(), q=q_.numpy(), C=C_.numpy(), Mask=M_.numpy())
+    cost = np.sum(pi_ * C_.numpy())
+    if plot:
+        sns.heatmap(pi_, linewidth=0.5)
+        return pi_, cost
+    return cost
+
+def masking_map_sequence(xs, xt, lamb=5, s=None, sub_length=25, gamma=0.1, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", cost_function="L2", plot=False):
     '''
     Parameters
     ----------
@@ -70,8 +126,7 @@ def kpg_sequence_distance(a, b, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg
            d-dimensional source samples
         b: ndarray, (n,d) 
            d-dimensional target samples
-        K: Class to access to the cost function
-        l: lambda, int 
+        lamb: lambda, int 
            Adjust the diagonal width. Default is 3
         sub_length: int
                     The number of elements of sub-sequence. Default is 25
@@ -84,11 +139,11 @@ def kpg_sequence_distance(a, b, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg
     ------- 
         cost: Transportation cost
     '''
-    subs_xs = subsequences(a, sub_length)
-    subs_xt = subsequences(b, sub_length)
+    subs_xs = subsequences(xs, sub_length)
+    subs_xt = subsequences(xt, sub_length)
     p = np.ones(len(subs_xs))/len(subs_xs)
     q = np.ones(len(subs_xt))/len(subs_xt)
-
+    
     C = cost_matrix(subs_xs, subs_xt)
     C /= (C.max() + eps)
 
@@ -104,97 +159,8 @@ def kpg_sequence_distance(a, b, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg
         raise ValueError("algorithm must be 'linear_programming' or 'sinkhorn'!")
     D = C.numpy()
     cost = np.sum(pi * D)
-    cost = np.exp(-gamma * cost)
+    #cost = np.exp(-gamma * cost)
     if plot:
         sns.heatmap(pi, linewidth=0.5)
         return pi, cost
     return cost
-
-def kpg_1d_distance(a, b, gamma=0.1, lamb=3, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", plot=False):
-    '''
-    Parameters
-    ----------
-        a: ndarray, (m,)
-           d-dimensional source samples
-        b: ndarray, (n,) 
-           d-dimensional target samples
-        K: Class to access to the cost function
-        l: lambda, int 
-           Adjust the diagonal width. Default is 3
-        sub_length: int
-                    The number of elements of sub-sequence. Default is 25
-        algorithm: str
-                   algorithm to solve model. Default is "linear_programming". Choices should be
-                   "linear_programming" and "sinkhorn"
-        plot: bool
-              status for plot the optimal transport matrix or not. Default is "False"
-    Returns
-    ------- 
-        cost: Transportation cost
-    '''
-    p = np.ones(len(a))/len(a)
-    q = np.ones(len(b))/len(b)
-
-    C = np.sum((a - b) ** 2, axis=1)
-    C /= (C.max() + eps)
-
-    ## mask matrix
-    M = create_mask(C, lamb)
-
-    ## solving model
-    if algorithm == "linear_programming":
-        pi = linearprog.lp(p,q,C,M)
-    elif algorithm == "sinkhorn":
-        pi = sinkhorn.sinkhorn_log_domain(p,q,C,M,reg,max_iterations,thres)
-    else:
-        raise ValueError("algorithm must be 'linear_programming' or 'sinkhorn'!")
-    D = C.numpy()
-    cost = np.sum(pi * D)
-    cost = np.exp(-gamma * cost)
-    if plot:
-        sns.heatmap(pi, linewidth=0.5)
-        return pi, cost
-    return cost
-
-def partial_kpg_rl(xs, xt, gamma=0.1, lamb=3, sub_length=25, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", cost_function="L2", plot=False):
-    p = np.ones(len(xs))/len(xs)
-    q = np.ones(len(xt))/len(xt)
-
-    C = cost_matrix(xs, xt)
-    C /= (C.max() + eps)
-
-    ## mask matrix
-    M = create_mask(C, lamb)
-
-    ## transport plan
-    pi = partial_OT.partial_ot(torch.Tensor(p), torch.Tensor(q), torch.Tensor(G), I, J, s=s)
-    return pi[:-1,:-1]
-
-def partial_ot(p,q,C,I,J,s,xi=None,A=None,reg=0.001):
-    if A is None:
-        A = C.max()
-    if xi is None:
-        xi = 1e2*C.max()
-
-    C_ = torch.cat((C, xi * torch.ones(C.size(0), 1)), dim=1)
-    C_ = torch.cat((C_, xi * torch.ones(1, C_.size(1))), dim=0)
-    C_[-1, -1] = 2 * xi + A
-
-    M = torch.ones_like(C, dtype=torch.int64)
-    M[I, :] = 0
-    M[:, J] = 0
-    M[I, J] = 1
-    a = torch.ones(M.size(0), 1, dtype=torch.int64)
-    a[I] = 0
-    b = torch.ones(M.size(1) + 1, 1, dtype=torch.int64)
-    b[J] = 0
-    M_ = torch.cat((M, a), dim=1)
-    M_ = torch.cat((M_, b.t()), dim=0)
-
-    p_ = torch.cat((p, (torch.sum(q) - s) * torch.Tensor([1])))
-    q_ = torch.cat((q, (torch.sum(p) - s) * torch.Tensor([1])))
-
-    pi_ = linearprog.lp(p_.numpy(), q_.numpy(), C_.numpy(), M_.numpy())
-    # pi_ = sinkhorn.sinkhorn_log_domain(p_, q_, C_, M_,reg=reg)
-    # pi = pi_[:-1, :-1]
-    return pi_

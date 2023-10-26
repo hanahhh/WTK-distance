@@ -2,20 +2,38 @@ import torch
 import numpy as np
 import scipy.io as sio
 
+def subsequences(time_series, k):
+    time_series = np.asarray(time_series)
+    n = time_series.size
+    shape = (n - k + 1, k)
+    strides = time_series.strides * 2
+
+    return np.lib.stride_tricks.as_strided(
+        time_series,
+        shape=shape,
+        strides=strides
+    )
+
 def cost_matrix(x, y):
     x, y = torch.Tensor(x), torch.Tensor(y)
     Cxy = x.pow(2).sum(dim=1).unsqueeze(1) + y.pow(2).sum(dim=1).unsqueeze(0) - 2 * torch.matmul(x, y.t())
     #Cxy = np.expand_dims((x**2).sum(axis=1),1) + np.expand_dims((y**2).sum(axis=1),0) - 2 * x@y.T
     return Cxy
 
+def cost_matrix_1d(x, y):
+    x = torch.Tensor(x).view(-1, 1)
+    y = torch.Tensor(y).view(1, -1)
+    Cxy = (x - y) ** 2
+    return Cxy
 
-def guiding_matrix(C1, C2, I, J, tau_s=0.1,tau_t=0.1):
-    C1_kp = C1[:, I]
-    C2_kp = C2[:, J]
-    Rs = softmax_matrix(-2*C1_kp / tau_s)
-    Rt = softmax_matrix(-2*C2_kp / tau_t)
-    S = JS_matrix(Rs, Rt)
-    return S
+def create_mask(C, k):
+    n, m = C.shape
+    M = np.zeros((n, m))
+    for i in range(n):
+        for j in range(m):
+            if (i > j*n/m - k) & (i < j*n/m + k):
+                M[i][j]=1 
+    return M
 
 
 def softmax(x):
