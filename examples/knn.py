@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score
 from tqdm import tqdm
 from ot_dis.wtk import wtk_distance
 from ot_dis.otw import otw_distance
-from ot_dis.kpg import masking_map, masking_map_partial, masking_map_sequence
+from ot_dis.mask_map import masking_map, masking_map_partial, masking_map_sequence
 # from wtk import wtk_distance
 # from otw import otw_distance, otw_distance_1
 import time

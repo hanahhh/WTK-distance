@@ -1,7 +1,7 @@
 import numpy as np
 import seaborn as sns
 import torch
-from . import linearprog,sinkhorn,kpg_gw,partial_OT
+from . import linearprog,sinkhorn
 from .utils import cost_matrix, cost_matrix_1d, create_mask, subsequences
 from ot.lp import emd_1d_sorted
 
