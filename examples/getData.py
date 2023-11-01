@@ -3,10 +3,7 @@ from aeon.datasets import load_from_arff_file
 import numpy as np
 
 def getData(dataset, path):
-    if dataset == "ItalyPowerDemand":
-        X_train, y_train, X_test, y_test = get_ucr_dataset(path, 'ItalyPowerDemand')
-        return X_train, y_train, X_test, y_test
-    elif dataset == "BME":
+    if dataset == "BME":
         train_path = f"{path}BME/BME_TRAIN.arff"
         test_path = f"{path}BME/BME_TEST.arff"
         X_train, y_train, X_test, y_test = processArffDataFile(train_path, test_path)
@@ -37,7 +34,9 @@ def getData(dataset, path):
         X_train, y_train, X_test, y_test = processArffDataFile(train_path, test_path)
         return X_train, y_train, X_test, y_test
     elif dataset == "DistalPhalanxTW":
-        X_train, y_train, X_test, y_test = get_ucr_dataset(path, 'DistalPhalanxTW')
+        train_path = f"{path}DistalPhalanxTW/DistalPhalanxTW_TRAIN.arff"
+        test_path = f"{path}DistalPhalanxTW/DistalPhalanxTW_TEST.arff"
+        X_train, y_train, X_test, y_test = processArffDataFile(train_path, test_path)
         return X_train, y_train, X_test, y_test
     elif dataset == "ECG200":
         train_path = f"{path}ECG200/ECG200_TRAIN.arff"
