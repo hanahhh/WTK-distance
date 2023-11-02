@@ -272,7 +272,7 @@ def wtk_distance(a, b, k=10, functor=wasserstein_kernel,  par_grid = [1], normal
         C = ot.dist(subs_a, subs_b, metric='euclidean')
         pi = ot.emd([], [], C)
         sns.heatmap(pi, linewidth=0.5)
-        return pi, np.exp(-gamma * dis)
+        return pi, gamma * dis
     return gamma * dis
 
 def wtk_distance_fix(a, b):

@@ -75,3 +75,15 @@ def knn_masking_map(X_train, X_test, y_train, y_test, method="normal", lamb=5, s
     )
     accuracy = accuracy_score(y_test, y_pred)
     return accuracy
+
+def knn_masking_map_pure(X_train, X_test, y_train, y_test, method="normal", lamb=5, s=0.5, sub_length=25, k=1):
+    kpg_dict = {
+        "sequence": masking_map_sequence,
+        "normal": masking_map,
+        "partial": masking_map_partial
+    }
+    clf = KNeighborsClassifier(n_neighbors = k, metric=kpg_dict[method], metric_params={"lamb": lamb, "s": s, "sub_length": sub_length}, n_jobs=-1)
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy

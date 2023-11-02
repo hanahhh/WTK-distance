@@ -1,0 +1,9 @@
+BME (k=1) Best score: 0.9333333333333332 - Best param: {'lamb': 1, 'sub_length': 115}
+BME (k=3) Best score: 0.8666666666666666 - Best param: {'lamb': 1, 'sub_length': 115}
+BME (k=5) Best score: 0.7333333333333333 - Best param: {'lamb': 1, 'sub_length': 12}
+--------------------------------------------------------------------------------------------------
+Chinatown (k=1) Best score: 1.0 - Best param: {'lamb': 1, 'sub_length': 2}
+Chinatown (k=3) Best score: 0.9 - Best param: {'lamb': 1, 'sub_length': 2}
+Chinatown (k=5) Best score: 0.8 - Best param: {'lamb': 1, 'sub_length': 2}
+--------------------------------------------------------------------------------------------------
+BeetleFly (k=1) 
