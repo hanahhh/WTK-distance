@@ -28,13 +28,15 @@ def lp(p, q, C, Mask=None,sparse=True):
     prob = cvx.Problem(obj,cons)
     prob.solve()
 
-    # print(prob.status)
-    pi = x.value
-    pi = np.reshape(pi,(len(q),len(p)))
-    pi = pi.T
-    if Mask is not None:
-        pi = pi*Mask
-    return pi
+    if prob.status == "optimal":
+        pi = x.value
+        pi = np.reshape(pi,(len(q),len(p)))
+        pi = pi.T
+        if Mask is not None:
+            pi = pi*Mask
+        return pi
+    else:
+        return np.zeros((len(p),len(q)))
 
 def lp_partial(p, q, C, Mask=None,sparse=True):
     c = np.reshape(C.T,(-1,1))

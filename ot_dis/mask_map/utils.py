@@ -14,10 +14,27 @@ def subsequences(time_series, k):
         strides=strides
     )
 
+def subsequence_2d(matrix_list, k):
+    subsequences = [matrix_list[i:i + k] for i in range(0, len(matrix_list)-k)]
+    return subsequences
+
+def subsequence_2d_without_overlap(matrix_list, k):
+    subsequences = [matrix_list[i:i + k] for i in range(0, len(matrix_list)-k, k)]
+    return subsequences
+
 def cost_matrix(x, y):
     x, y = torch.Tensor(x), torch.Tensor(y)
     Cxy = x.pow(2).sum(dim=1).unsqueeze(1) + y.pow(2).sum(dim=1).unsqueeze(0) - 2 * torch.matmul(x, y.t())
     #Cxy = np.expand_dims((x**2).sum(axis=1),1) + np.expand_dims((y**2).sum(axis=1),0) - 2 * x@y.T
+    return Cxy
+
+def cost_matrix_2d(x, y):
+    m = len(x)
+    n = len(y)
+    Cxy = np.zeros((m, n))
+    for row in range(m):
+        for col in range(n):
+            Cxy[row, col] = np.linalg.norm(x[row] - y[col])
     return Cxy
 
 def cost_matrix_1d(x, y):

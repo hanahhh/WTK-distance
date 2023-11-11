@@ -2,7 +2,7 @@ import numpy as np
 import seaborn as sns
 import torch
 from . import linearprog,sinkhorn
-from .utils import cost_matrix, cost_matrix_1d, create_mask, subsequences
+from .utils import cost_matrix, cost_matrix_1d, create_mask, subsequences, subsequence_2d, cost_matrix_2d
 from ot.lp import emd_1d_sorted
 
 def masking_map(xs, xt, lamb=5, s=None, sub_length=None, gamma=None, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", plot=False):
@@ -159,6 +159,52 @@ def masking_map_sequence(xs, xt, lamb=5, s=None, sub_length=25, gamma=0.1, eps=1
         raise ValueError("algorithm must be 'linear_programming' or 'sinkhorn'!")
     D = C.numpy()
     cost = np.sum(pi * D)
+    #cost = np.exp(-gamma * cost)
+    if plot:
+        sns.heatmap(pi, linewidth=0.5)
+        return pi, cost
+    return cost
+
+def masking_map_sequence_2d(xs, xt, lamb=5, s=None, sub_length=25, gamma=0.1, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", cost_function="L2", plot=False):
+    '''
+    Parameters
+    ----------
+        a: ndarray, (m,d)
+           d-dimensional source samples
+        b: ndarray, (n,d) 
+           d-dimensional target samples
+        lamb: lambda, int 
+           Adjust the diagonal width. Default is 3
+        sub_length: int
+                    The number of elements of sub-sequence. Default is 25
+        algorithm: str
+                   algorithm to solve model. Default is "linear_programming". Choices should be
+                   "linear_programming" and "sinkhorn"
+        plot: bool
+              status for plot the optimal transport matrix or not. Default is "False"
+    Returns
+    ------- 
+        cost: Transportation cost
+    '''
+    subs_xs = subsequence_2d(xs, sub_length)
+    subs_xt = subsequence_2d(xt, sub_length)
+    p = np.ones(len(subs_xs))/len(subs_xs)
+    q = np.ones(len(subs_xt))/len(subs_xt)
+    
+    C = cost_matrix_2d(subs_xs, subs_xt)
+    C /= (C.max() + eps)
+
+    ## mask matrix
+    M = create_mask(C, lamb)
+
+    ## solving model
+    if algorithm == "linear_programming":
+        pi = linearprog.lp(p,q,C,M)
+    elif algorithm == "sinkhorn":
+        pi = sinkhorn.sinkhorn_log_domain(p,q,C,M,reg,max_iterations,thres)
+    else:
+        raise ValueError("algorithm must be 'linear_programming' or 'sinkhorn'!")
+    cost = np.sum(pi * C)
     #cost = np.exp(-gamma * cost)
     if plot:
         sns.heatmap(pi, linewidth=0.5)
