@@ -52,7 +52,6 @@ def create_mask(C, k):
                 M[i][j]=1 
     return M
 
-
 def softmax(x):
     y = np.exp(x - np.max(x))
     f_x = y / np.sum(np.exp(x - np.max(x)))
@@ -74,3 +73,34 @@ def JS_matrix(P, Q, eps=1e-10):
     kl1 = KL_matrix(P, (P + Q) / 2, eps)
     kl2 = KL_matrix(Q, (P + Q) / 2, eps)
     return 0.5 * (kl1 + kl2)
+
+def create_neighbor_relationship(xs):
+    xs = np.array(xs)
+    if xs.ndim == 1:
+        xt = np.insert(xs, 0, np.zeros_like(xs[0]))[:-1]
+        f = xs - xt
+        f = f.reshape(-1, 1)
+    else:
+        xt = np.vstack((np.zeros_like(xs[0]),xs))[:-1]
+        f = xs - xt
+    d = np.linalg.norm(f, axis=1)
+    f1 = np.cumsum(d)
+    sum_dist = f1[len(f1)-1]
+    return f1/sum_dist
+
+def create_mask_DT(xs, xt, lamb):
+    f1 = create_neighbor_relationship(xs)
+    f2 = create_neighbor_relationship(xt)
+    n = len(f1)
+    m = len(f2)
+    M = np.zeros((n, m))
+    for i in range(0, n):
+        for j in range(0, m):
+            if (i > j*n/m - lamb) & (i < j*n/m + lamb):
+                if f1[i] == f2[j]:
+                    M[i][j] = 1
+                # elif np.abs(min(f1[i],f2[j])/max(f1[i],f2[j])) > lamb:
+                #     M[i][j] = 1
+                else:
+                    M[i][j] = np.abs(min(f1[i],f2[j])/max(f1[i],f2[j]))
+    return M

@@ -2,8 +2,56 @@ import numpy as np
 import seaborn as sns
 import torch
 from . import linearprog,sinkhorn
-from .utils import cost_matrix, cost_matrix_1d, create_mask, subsequences, subsequence_2d, cost_matrix_2d
+from .utils import cost_matrix, cost_matrix_1d, create_mask, subsequences, subsequence_2d, cost_matrix_2d, create_mask_DT
 from ot.lp import emd_1d_sorted
+
+def masking_map_DT(xs, xt, lamb=5, s=None, sub_length=None, gamma=None, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", plot=False):
+    '''
+    Parameters
+    ----------
+        xs: ndarray, (m,d)
+            d-dimensional source samples
+        xt: ndarray, (n,d) 
+            d-dimensional target samples
+        lamb: lambda, int 
+            Adjust the diagonal width. Default is 3
+        algorithm: str
+            algorithm to solve model. Default is "linear_programming". Choices should be
+            "linear_programming" and "sinkhorn"
+        plot: bool
+            status for plot the optimal transport matrix or not. Default is "False"
+    Returns
+    ------- 
+        cost: Transportation cost
+    '''
+    p = np.ones(len(xs))/len(xs)
+    q = np.ones(len(xt))/len(xt)
+    
+    if xs.ndim == 1: 
+        C = cost_matrix_1d(xs, xt)
+    elif xs.ndim == 2:
+        C = cost_matrix(xs, xt)
+    else:
+        raise ValueError("The data must in the form of 1d or 2d array")
+    C /= (C.max() + eps)
+
+    ## mask matrix
+    M = create_mask_DT(xs, xt, lamb)
+
+    ## solving model
+    if algorithm == "linear_programming":
+        pi = linearprog.lp_partial(p,q,C,M)
+    elif algorithm == "sinkhorn":
+        pi = sinkhorn.sinkhorn_log_domain(p,q,C,M,reg,max_iterations,thres)
+    else:
+        raise ValueError("algorithm must be 'linear_programming' or 'sinkhorn'!")
+    
+    cost = np.sum(pi * C.numpy())
+    #cost = np.exp(-gamma * cost)
+    if plot:
+        sns.heatmap(pi, linewidth=0.5)
+        return pi, cost
+    return cost 
 
 def masking_map(xs, xt, lamb=5, s=None, sub_length=None, gamma=None, eps=1e-10, reg=0.0001, max_iterations=100000, thres=1e-5, algorithm="linear_programming", plot=False):
     '''
