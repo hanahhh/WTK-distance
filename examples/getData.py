@@ -103,6 +103,11 @@ def getData(dataset, path):
         test_path = f"{path}ToeSegmentation2/ToeSegmentation2_TEST.arff"
         X_train, y_train, X_test, y_test = processArffDataFile(train_path, test_path)
         return X_train, y_train, X_test, y_test
+    elif dataset == "BasicMotions":
+        train_path = f"{path}BasicMotions/BasicMotions_TRAIN.arff"
+        test_path = f"{path}BasicMotions/BasicMotions_TEST.arff"
+        X_train, y_train, X_test, y_test = processArffDataFile(train_path, test_path)
+        return X_train, y_train, X_test, y_test
 
 def processArffDataFile(train_path, test_path):
     X_train, y_train = load_from_arff_file(train_path)
